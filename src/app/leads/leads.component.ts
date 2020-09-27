@@ -23,14 +23,15 @@ export class LeadsComponent implements OnInit {
   private listAll;
   private listAllStatus;
   private statusId;
+  private dateModal;
 
   prospect = [];
   confirmedData = [];
   scheduledMeeting = [];
 
-  data = false;
-
   status: any = [];
+
+  teste: number;
 
   constructor(
     private router: Router, 
@@ -64,13 +65,17 @@ export class LeadsComponent implements OnInit {
     }
 
     if(event.previousContainer.id === "confirmedData") {
-      this.openDialog();
-      this.getStatusByDescription("Dados Confirmados", event.item.element.nativeElement.id);
+      this.openDialog(parseInt(event.item.element.nativeElement.id));
     }
   }
 
-  openDialog() {
-    this.dialog.open(ModalDataComponent);
+  openDialog(id) {
+    let dialogRef= this.dialog.open(ModalDataComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.dateModal = result;
+      this.getStatusByDescription("Reunião Agendada", id, this.dateModal);
+    });
   }
 
   listLeads() {
@@ -90,14 +95,14 @@ export class LeadsComponent implements OnInit {
         );
   }
 
-  getStatusByDescription(description, leadId) {
+  getStatusByDescription(description, leadId, bodyUpdate) {
     this.listAllStatus =
         this.leadService.getStatusByDescription(description)
         .subscribe(
             (result) => {
               debugger
               this.status = result;
-              this.updateLead(leadId, this.status.status.id);
+              this.updateLead(leadId, this.status.status.id, bodyUpdate);
               console.log(result);
             },
             (err) => {
@@ -131,9 +136,9 @@ export class LeadsComponent implements OnInit {
     );
   }
 
-  updateLead(lead, status) {
+  updateLead(lead, status, body) {
     this.updateLeadSubscription =
-    this.leadService.updateLeadInformations(lead, status)
+    this.leadService.updateLeadInformations(lead, status, body)
     .subscribe(
         (retorno) => {
             console.log(retorno);

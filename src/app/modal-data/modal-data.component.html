@@ -1,7 +1,7 @@
 <h2 mat-dialog-title>Data de Agendamento</h2>
 <mat-dialog-content>
-        <input type="datetime-local" matInput placeholder="" value="">
+        <input type="datetime-local" matInput placeholder="" value="" [(ngModel)]="data">
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-button color="primary" mat-dialog-close>Salvar</button>
+    <button mat-button color="primary" mat-dialog-close mat-dialog-close={{data}}>Salvar</button>
 </mat-dialog-actions>
