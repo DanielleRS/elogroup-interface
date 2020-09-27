@@ -1,0 +1,74 @@
+<div class="container leads">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6">
+                <img src="../assets/images/logo.png" alt="Logo">
+            </div>
+            <div class="col-sm-6 painelLeads">
+                <h4 class="panelLeads">Painel de Leads</h4>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="col-sm-12">
+        <button type="button" class="btn btn-primary btn-block button-lead" (click)="newLead()">Novo Lead (+)</button>
+        <br>
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-3 example-container">
+                    <h4>Cliente em Potencial</h4>
+                
+                    <div
+                        cdkDropList
+                        #propectList="cdkDropList"
+                        id="prospect"
+                        [cdkDropListData]="prospect"
+                        [cdkDropListConnectedTo]="[confirmedDataList]"
+                        class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" id={{item.id}} *ngFor="let item of prospect" cdkDrag>{{item.customerName}}</div>
+                    </div>
+                </div>
+                
+                <div class="col-sm-3 example-container">
+                    <h4>Dados Confirmados</h4>
+                
+                    <div
+                        cdkDropList
+                        #confirmedDataList="cdkDropList"
+                        id="confirmedData"
+                        [cdkDropListData]="confirmedData"
+                        [cdkDropListConnectedTo]="[scheduledMeetingList]"
+                        class="example-list"
+                        (cdkDropListDropped)="drop($event)"
+                        >
+                        <div class="example-box" id={{item.id}} *ngFor="let item of confirmedData" cdkDrag>{{item.customerName}}</div>
+                    </div>
+                </div>
+        
+                <div class="col-sm-3 example-container">
+                    <h4>Reunião Agendada</h4>
+                
+                    <div
+                        cdkDropList
+                        #scheduledMeetingList="cdkDropList"
+                        id="scheduledMeeting"
+                        [cdkDropListData]="scheduledMeeting"
+                        [cdkDropListConnectedTo]="[]"
+                        class="example-list"
+                        (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" id={{item.id}} *ngFor="let item of scheduledMeeting" cdkDrag>{{item.customerName}}</div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-data" tabindex="-1" role=" dialog">
+    <div class="modal-dialog" role="document">
+        <app-modal-data></app-modal-data>
+    </div>
+</div>
