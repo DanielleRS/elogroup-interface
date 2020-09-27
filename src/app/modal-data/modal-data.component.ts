@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModalDataComponent implements OnInit {
 
-  private data;
+  public data;
 
   constructor() { }
 

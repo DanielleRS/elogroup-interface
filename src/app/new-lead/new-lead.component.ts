@@ -109,6 +109,7 @@ export class NewLeadComponent implements OnInit {
       customerName: this.formRegister.value.name,
       customerPhone: this.formRegister.value.phone,
       customerEmail: this.formRegister.value.email,
+      statusDescription: "Cliente em Potencial",
       opportunities: this.opportunitiesSelected,
     }
     this.validate(lead);

@@ -37,16 +37,17 @@ export class LeadsService {
       return this.httpClient.get<LeadsEntity>(url);
     }
 
-    updateLeadInformations(leadId: number, statusId: number, body: Date): Observable<any> {
+    updateLeadInformations(leadId: number, body): Observable<any> {
       this.inicializarServicos();
       debugger
-      const url = `${this.api.getUrlBaseApi()}/leads/${leadId}/status/${statusId}`;
+      const url = `${this.api.getUrlBaseApi()}/leads/${leadId}/status`;
 
-      const bodyDate = {
-        "date": body
+      const bodyUpdate = {
+        "date": body.date,
+        "statusDescription": body.statusDescription
       }
 
-      return this.httpClient.put(url, bodyDate);
+      return this.httpClient.put(url, bodyUpdate);
     }
 
     getStatusByDescription(description: string) : Observable<string> {

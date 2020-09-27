@@ -74,7 +74,7 @@ export class LeadsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
       this.dateModal = result;
-      this.getStatusByDescription("Reunião Agendada", id, this.dateModal);
+      this.updateLead(id, this.dateModal);
     });
   }
 
@@ -87,23 +87,8 @@ export class LeadsComponent implements OnInit {
               this.allLeads = result;
               console.log(this.allLeads);
               this.listAll = this.allLeads;
-              this.listAccordingToStatus();
-            },
-            (err) => {
-              console.log(err);
-            }
-        );
-  }
-
-  getStatusByDescription(description, leadId, bodyUpdate) {
-    this.listAllStatus =
-        this.leadService.getStatusByDescription(description)
-        .subscribe(
-            (result) => {
-              debugger
-              this.status = result;
-              this.updateLead(leadId, this.status.status.id, bodyUpdate);
-              console.log(result);
+              if(this.listAll.length !== 0)
+                this.listAccordingToStatus();
             },
             (err) => {
               console.log(err);
@@ -125,7 +110,7 @@ export class LeadsComponent implements OnInit {
 
   saveCustomer(lead) {
     this.customerSubscription =
-    this.customerService.registerCustomer(lead)
+    this.customerService.registerCustomer(lead, "Dados Confirmados")
     .subscribe(
         (retorno) => {
             console.log(retorno);
@@ -136,9 +121,13 @@ export class LeadsComponent implements OnInit {
     );
   }
 
-  updateLead(lead, status, body) {
+  updateLead(lead, date) {
+    const body = {
+      date: date,
+      statusDescription: "Reunião Agendada"
+    };
     this.updateLeadSubscription =
-    this.leadService.updateLeadInformations(lead, status, body)
+    this.leadService.updateLeadInformations(lead, body)
     .subscribe(
         (retorno) => {
             console.log(retorno);

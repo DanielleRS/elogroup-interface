@@ -20,11 +20,15 @@ export class CustomersService {
         console.log('URL base api', this.api.getUrlBaseApi());
     }
 
-    registerCustomer(leadId: number): Observable<any> {
+    registerCustomer(leadId: number, body: string): Observable<any> {
 
         this.inicializarServicos();
         const url = `${this.api.getUrlBaseApi()}/leads/${leadId}/customer`;
 
-        return this.httpClient.post(url, null);
+        const bodyStatus = {
+            "statusDescription": body
+        };
+
+        return this.httpClient.post(url, bodyStatus);
     }
 }

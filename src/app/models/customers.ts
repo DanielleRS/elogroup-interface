@@ -1,4 +1,5 @@
 export interface Customers {
-    id: number;
+    id_?: number;
     leadId: number;
+    statusDescription: string;
 }
