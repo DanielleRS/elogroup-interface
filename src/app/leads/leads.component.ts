@@ -64,7 +64,8 @@ export class LeadsComponent implements OnInit {
       this.saveCustomer(event.item.element.nativeElement.id);
     }
 
-    if(event.previousContainer.id === "confirmedData") {
+    if(event.previousContainer.id === "confirmedData" && event.distance.x > 0) {
+      console.log(event);
       this.openDialog(parseInt(event.item.element.nativeElement.id));
     }
   }
